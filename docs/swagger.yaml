@@ -1,0 +1,228 @@
+definitions:
+  cakes.Cake:
+    properties:
+      created_at:
+        type: string
+      description:
+        type: string
+      id:
+        type: integer
+      image:
+        type: string
+      rating:
+        type: number
+      title:
+        type: string
+      updated_at:
+        type: string
+    type: object
+  cakes.RequestDto:
+    properties:
+      description:
+        type: string
+      image:
+        type: string
+      rating:
+        type: number
+      title:
+        type: string
+    required:
+    - title
+    type: object
+  cakes.UpdateRequestDto:
+    properties:
+      description:
+        type: string
+      id:
+        type: integer
+      image:
+        type: string
+      rating:
+        type: number
+      title:
+        type: string
+    type: object
+  helpers.JSONResponse:
+    properties:
+      errors:
+        type: object
+      message:
+        type: string
+    type: object
+info:
+  contact: {}
+  description: Cake store API for testing purposes.
+  title: Cake Store API
+  version: "1.0"
+paths:
+  /cakes:
+    get:
+      consumes:
+      - application/json
+      description: This endpoint for get list of cakes
+      parameters:
+      - in: query
+        name: description
+        type: string
+      - in: query
+        name: limit
+        type: integer
+      - in: query
+        name: offset
+        type: integer
+      - in: query
+        name: title
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            items:
+              $ref: '#/definitions/cakes.Cake'
+            type: array
+        "422":
+          description: Unprocessable Entity
+          schema:
+            $ref: '#/definitions/helpers.JSONResponse'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/helpers.JSONResponse'
+      summary: List all cakes
+      tags:
+      - Cakes
+    post:
+      consumes:
+      - application/json
+      description: This endpoint for creating cake
+      parameters:
+      - description: Create cakes
+        in: body
+        name: Request
+        required: true
+        schema:
+          $ref: '#/definitions/cakes.RequestDto'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/cakes.Cake'
+        "422":
+          description: Unprocessable Entity
+          schema:
+            $ref: '#/definitions/helpers.JSONResponse'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/helpers.JSONResponse'
+      summary: Create cake
+      tags:
+      - Cakes
+  /cakes/{id}:
+    delete:
+      consumes:
+      - application/json
+      description: This endpoint for deleting cake
+      parameters:
+      - description: cake id
+        in: path
+        name: id
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/cakes.Cake'
+        "204":
+          description: No Content
+          schema:
+            $ref: '#/definitions/helpers.JSONResponse'
+        "422":
+          description: Unprocessable Entity
+          schema:
+            $ref: '#/definitions/helpers.JSONResponse'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/helpers.JSONResponse'
+      summary: Delete cake
+      tags:
+      - Cakes
+    get:
+      consumes:
+      - application/json
+      description: This endpoint for get detail of cake
+      parameters:
+      - description: cake id
+        in: path
+        name: id
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/cakes.Cake'
+        "204":
+          description: No Content
+          schema:
+            $ref: '#/definitions/helpers.JSONResponse'
+        "422":
+          description: Unprocessable Entity
+          schema:
+            $ref: '#/definitions/helpers.JSONResponse'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/helpers.JSONResponse'
+      summary: Get detail of cake
+      tags:
+      - Cakes
+    patch:
+      consumes:
+      - application/json
+      description: This endpoint for updating cake
+      parameters:
+      - description: cake id
+        in: path
+        name: id
+        required: true
+        type: string
+      - description: Update cakes
+        in: body
+        name: Request
+        required: true
+        schema:
+          $ref: '#/definitions/cakes.UpdateRequestDto'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/cakes.Cake'
+        "204":
+          description: No Content
+          schema:
+            $ref: '#/definitions/helpers.JSONResponse'
+        "422":
+          description: Unprocessable Entity
+          schema:
+            $ref: '#/definitions/helpers.JSONResponse'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/helpers.JSONResponse'
+      summary: Update cake
+      tags:
+      - Cakes
+swagger: "2.0"
